@@ -10,5 +10,6 @@ namespace Family_budget.Models
         public int Id { get; set; }
         public decimal Expense { get; set; }
         public DateTime CountDate { get; set; }
+        public User User { get; set; }
     }
 }
