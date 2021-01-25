@@ -9,5 +9,6 @@ namespace Family_budget.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ICollection<UserExpense> UserExpenses { get; set; }
     }
 }
