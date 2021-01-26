@@ -12,7 +12,6 @@ namespace Family_budget.Models
 
         [Required]
         public string Name { get; set; }
-
         public ICollection<UserExpense> UserExpenses { get; set; }
     }
 }
