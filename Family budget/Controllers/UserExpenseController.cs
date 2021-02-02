@@ -78,21 +78,24 @@ namespace Family_budget.Controllers
         // GET: UserExpenseController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var expense = _context.UserExpenses.Include(u => u.User).FirstOrDefault(ex => ex.Id == id);
+            return View(expense);
         }
 
         // POST: UserExpenseController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(UserExpense expenses)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _context.UserExpenses.Update(expenses);
+                await _context.SaveChangesAsync();
+                return View("Details", expenses);
             }
             catch
             {
-                return View();
+                return NotFound();
             }
         }
 
