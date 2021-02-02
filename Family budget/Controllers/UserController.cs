@@ -130,6 +130,8 @@ namespace Family_budget.Controllers
         {
             try
             {
+                var expenses = userContext.UserExpenses.Where(ex => ex.User.Id == user.Id);
+                userContext.UserExpenses.RemoveRange(expenses);
                 userContext.Users.Remove(user);
                 await userContext.SaveChangesAsync();
                 return View("Index", userContext.Users);
