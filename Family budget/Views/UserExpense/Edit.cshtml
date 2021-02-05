@@ -33,7 +33,10 @@
 </div>
 
 <div>
-    <a asp-action="Index" asp-route-id="@Model.User.Id">Back to List</a>
+    @if (Model != null && Model.User != null)
+    {
+        <a asp-action="Index" asp-route-id="@Model.User.Id">Back to List</a>
+    }
 </div>
 
 @section Scripts {

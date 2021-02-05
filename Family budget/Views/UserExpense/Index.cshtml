@@ -10,7 +10,10 @@
     var modelId = Model.FirstOrDefault();
 }
 <p>
-    <a asp-action="Create" asp-route-id="@modelId.User.Id">Create New</a>
+    @if (modelId != null)
+    {
+        <a asp-action="Create" asp-route-id="@modelId.User.Id">Create New</a>
+    }
 </p>
 
 <table class="table">
