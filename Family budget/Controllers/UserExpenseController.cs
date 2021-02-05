@@ -102,21 +102,24 @@ namespace Family_budget.Controllers
         // GET: UserExpenseController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var expense = _context.UserExpenses.Include(u => u.User).FirstOrDefault(ex => ex.Id == id);
+            return View(expense);
         }
 
         // POST: UserExpenseController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(UserExpense expenses)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _context.UserExpenses.Remove(expenses);
+                await _context.SaveChangesAsync();
+                return View("Index", _context.UserExpenses.Where(ex => ex.User.Id == expenses.User.Id));
             }
             catch
             {
-                return View();
+                return NotFound();
             }
         }
     }
