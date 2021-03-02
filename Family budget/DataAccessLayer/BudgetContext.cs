@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Family_budget.Models
+namespace Family_budget.DataAccessLayer
 {
     public class BudgetContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserExpense> UserExpenses { get; set; }
+
+        #region Tables
+        public DbSet<Member> Members { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
+        #endregion
 
         public BudgetContext(DbContextOptions<BudgetContext> options)
             : base(options)
