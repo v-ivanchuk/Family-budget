@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Family_budget.DataAccessLayer.Interfaces
 {
-    public interface IMemberRepository : IRepository<Member>
+    public interface IUnitOfWork : IDisposable
     {
-        
+        void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

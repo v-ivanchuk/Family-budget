@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Family_budget.DataAccessLayer.Interfaces
 {
-    interface IExpenseRepository : IRepository<Expense>
+    public interface IExpenseRepository : IRepository<Expense>
     {
     }
 }

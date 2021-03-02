@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Family_budget.DataAccessLayer.Interfaces
 {
-    interface IRepository<TEntity> where TEntity : BaseEntity
+    public interface IRepository<TEntity> where TEntity : BaseEntity
     {
         TEntity Add(TEntity entity);
 

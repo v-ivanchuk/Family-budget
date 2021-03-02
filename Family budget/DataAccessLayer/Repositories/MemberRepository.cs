@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Family_budget.DataAccessLayer.Repositories.Realizations
+namespace Family_budget.DataAccessLayer.Repositories
 {
     public class MemberRepository : Repository<Member>, IMemberRepository
     {
