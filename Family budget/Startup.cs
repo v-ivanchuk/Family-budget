@@ -9,6 +9,7 @@ using Family_budget.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,6 +50,15 @@ namespace Family_budget
             services.AddSingleton(mapper);
 
             services.AddControllersWithViews();
+
+            services.Configure<RazorViewEngineOptions>(o =>
+            {
+                o.ViewLocationFormats.Clear();
+                o.ViewLocationFormats.Add
+                    ("/PresentationLayer/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
+                o.ViewLocationFormats.Add
+                    ("/PresentationLayer/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
