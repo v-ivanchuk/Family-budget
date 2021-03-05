@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Family_budget.Controllers
+namespace Family_budget.PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {

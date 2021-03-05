@@ -27,13 +27,24 @@ namespace Family_budget.DataAccessLayer.Repositories
 
         public bool Delete(TEntity entity) => dbEntities.Remove(entity).Entity != null;
 
-        public async Task<bool> DeleteAsync(TEntity entity) => 
-            (await Task.Run(() => dbEntities.Remove(entity))).Entity != null;
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var found = await dbEntities.FirstOrDefaultAsync(entity => entity.Id == id);
 
-        public TEntity Update(TEntity entity) => dbEntities.Update(entity).Entity;
+            if (found == null)
+            {
+                return false;
+            }
+
+            dbEntities.Remove(found);
+            return true;
+        }
+
+        public void Update(TEntity entity) => dbEntities.Update(entity);
 
         public async Task<TEntity> UpdateAsync(TEntity entity) => 
-            (await Task.Run(() => dbEntities.Remove(entity))).Entity;
+            //(await Task.Run(() => dbEntities.Update(entity))).Entity;
+            await Task.Run(() => dbEntities.Update(entity).Entity);
 
         public IQueryable<TEntity> FindAll()
         {
@@ -45,14 +56,29 @@ namespace Family_budget.DataAccessLayer.Repositories
             return dbEntities.Where(expression);
         }
 
-        public TEntity GetById(int id)
+        public Task<List<TEntity>> FindAllAsync()
+        {
+            return dbEntities.ToListAsync();
+        }
+
+        public TEntity FindById(int id)
         {
             return dbEntities.FirstOrDefault(entity => entity.Id == id);
         }
 
-        public Task<TEntity> GetByIdAsync(int id)
+        public Task<TEntity> FindByIdAsync(int id)
         {
             return dbEntities.FirstOrDefaultAsync(entity => entity.Id == id);
+        }
+
+        public void DeleteRange(IQueryable<TEntity> queryable)
+        {
+            if (queryable == null)
+            {
+                return;
+            }
+
+            dbEntities.RemoveRange(queryable);
         }
     }
 }

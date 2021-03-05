@@ -1,4 +1,10 @@
+using AutoMapper;
+using Family_budget.BusinessLayer.Interfaces;
+using Family_budget.BusinessLayer.Mapping;
+using Family_budget.BusinessLayer.Services;
 using Family_budget.DataAccessLayer;
+using Family_budget.DataAccessLayer.Interfaces;
+using Family_budget.DataAccessLayer.Repositories;
 using Family_budget.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,18 +22,32 @@ namespace Family_budget
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BudgetContext>(options =>
                 options.UseSqlServer(connection));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IMemberService, MemberService>();
+            services.AddScoped<IExpenseService, ExpenseService>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            
+            services.AddSingleton(mapper);
+
             services.AddControllersWithViews();
         }
 

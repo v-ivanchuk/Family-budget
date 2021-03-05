@@ -1,4 +1,4 @@
-﻿@model Family_budget.Models.UserExpense
+﻿@model Family_budget.PresentationLayer.Models.ExpenseViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,16 +11,16 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Expense)
+            @Html.DisplayNameFor(model => model.Value)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Expense)
+            @Html.DisplayFor(model => model.Value)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CountDate)
+            @Html.DisplayNameFor(model => model.ExpenseDateTime)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CountDate)
+            @Html.DisplayFor(model => model.ExpenseDateTime)
         </dd>
     </dl>
 </div>
@@ -30,9 +30,9 @@
 
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
         <a> | </a>
-        if (Model.User != null)
+        if (Model.Member != null)
         {
-            <a asp-action="Index" asp-route-id=@Model.User.Id>Back to List</a>
+            <a asp-action="Index" asp-route-id=@Model.Member.Id>Back to List</a>
         }
     }
 </div>

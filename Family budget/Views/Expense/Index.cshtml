@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Family_budget.Models.UserExpense>
+﻿@model IEnumerable<Family_budget.PresentationLayer.Models.ExpenseViewModel>
 
 @{
     ViewData["Title"] = "Expenses";
@@ -12,7 +12,7 @@
 <p>
     @if (modelId != null)
     {
-        <a asp-action="Create" asp-route-id="@modelId.User.Id">Create New</a>
+        <a asp-action="Create" asp-route-id="@modelId.Member.Id">Create New</a>
     }
 </p>
 
@@ -20,10 +20,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Expense)
+                @Html.DisplayNameFor(model => model.Value)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CountDate)
+                @Html.DisplayNameFor(model => model.ExpenseDateTime)
             </th>
             <th></th>
         </tr>
@@ -33,10 +33,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Expense)
+                    @Html.DisplayFor(modelItem => item.Value)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CountDate)
+                    @Html.DisplayFor(modelItem => item.ExpenseDateTime)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

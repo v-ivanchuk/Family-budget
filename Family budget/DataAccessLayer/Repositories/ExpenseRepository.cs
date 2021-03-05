@@ -20,6 +20,7 @@ namespace Family_budget.DataAccessLayer.Repositories
             return context.Expenses
                      .Include(member => member.Member);
         }
+
         public new IQueryable<Expense> FindByCondition(Expression<Func<Expense, bool>> expression)
         {
             return context.Expenses

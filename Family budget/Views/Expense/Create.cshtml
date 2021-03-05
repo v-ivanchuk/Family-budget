@@ -1,4 +1,4 @@
-﻿@model Family_budget.Models.UserExpense
+﻿@model Family_budget.PresentationLayer.Models.ExpenseViewModel
 
 @{
     ViewData["Title"] = "Add Expense";
@@ -12,9 +12,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Expense" class="control-label"></label>
-                <input asp-for="Expense" class="form-control" />
-                <span asp-validation-for="Expense" class="text-danger"></span>
+                <label asp-for="Value" class="control-label"></label>
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
             </div>
             @*<div class="form-group">
                 <label asp-for="CountDate" class="control-label"></label>

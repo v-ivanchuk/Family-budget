@@ -15,9 +15,11 @@ namespace Family_budget.DataAccessLayer.Interfaces
 
         bool Delete(TEntity entity);
 
-        Task<bool> DeleteAsync(TEntity entity);
+        Task<bool> DeleteAsync(int id);
 
-        TEntity Update(TEntity entity);
+        void DeleteRange(IQueryable<TEntity> queryable);
+
+        void Update(TEntity entity);
 
         Task<TEntity> UpdateAsync(TEntity entity);
 
@@ -25,8 +27,10 @@ namespace Family_budget.DataAccessLayer.Interfaces
 
         IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression);
 
-        TEntity GetById(int id);
+        Task<List<TEntity>> FindAllAsync();
 
-        Task<TEntity> GetByIdAsync(int id);
+        TEntity FindById(int id);
+
+        Task<TEntity> FindByIdAsync(int id);
     }
 }
