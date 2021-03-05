@@ -55,9 +55,7 @@ namespace Family_budget.BusinessLayer.Services
             }
 
             var memberEntity = _mapper.Map<Member>(memberDTO);
-            memberEntity.DateCreated = checkMember.DateCreated;
-            memberEntity.DateUpdated = DateTime.UtcNow;
-            _unitOfWork.GetMemberRepository.Update(memberEntity);
+            await _unitOfWork.GetMemberRepository.UpdateAsync(memberEntity);
             await _unitOfWork.SaveChangesAsync();
             return true;
         }

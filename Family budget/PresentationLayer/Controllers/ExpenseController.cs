@@ -34,7 +34,6 @@ namespace Family_budget.PresentationLayer.Controllers
             var membersDTO = await _memberService.GetAllMembersAsync();
             var membersView = _mapper.Map<List<MemberDTO>, List<MemberViewModel>>(membersDTO);
             ViewBag.Category = membersView.Select(u => new SelectListItem() { Text = u.Name, Value = u.Id.ToString() });
-            //_context.Users.Select(u => new SelectListItem() { Text = u.Name, Value = u.Id.ToString() });
             return View();
         }
 
@@ -78,7 +77,7 @@ namespace Family_budget.PresentationLayer.Controllers
                     var memberDTO = await _memberService.GetMemberByIdAsync(id);
                     var memberView = _mapper.Map<MemberDTO, MemberViewModel>(memberDTO);
 
-                    //expenseView.Member = memberView;
+                    expenseView.Member = memberView;
                     expenseView.Id = 0;
                     var expenseDTO = _mapper.Map<ExpenseViewModel, ExpenseDTO>(expenseView);
                     await _expenseService.CreateExpenseAsync(expenseDTO);

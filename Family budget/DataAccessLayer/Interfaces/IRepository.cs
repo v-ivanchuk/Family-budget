@@ -21,7 +21,7 @@ namespace Family_budget.DataAccessLayer.Interfaces
 
         void Update(TEntity entity);
 
-        Task<TEntity> UpdateAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
 
         IQueryable<TEntity> FindAll();
 

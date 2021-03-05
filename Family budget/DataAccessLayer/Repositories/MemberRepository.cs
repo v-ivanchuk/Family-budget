@@ -12,5 +12,19 @@ namespace Family_budget.DataAccessLayer.Repositories
             : base(budgetContext)
         {
         }
+
+        public new async Task UpdateAsync(Member member)
+        {
+            var checkMember = context.Members.FirstOrDefault(m => m.Id == member.Id);
+            if (checkMember == null)
+            {
+                return;
+            }
+
+            checkMember.DateUpdated = DateTime.UtcNow;
+            checkMember.Name = member.Name;
+
+            await Task.Run(() => context.Members.Update(checkMember));
+        }
     }
 }
