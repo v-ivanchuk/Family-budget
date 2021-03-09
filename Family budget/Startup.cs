@@ -5,19 +5,13 @@ using Family_budget.BusinessLayer.Services;
 using Family_budget.DataAccessLayer;
 using Family_budget.DataAccessLayer.Interfaces;
 using Family_budget.DataAccessLayer.Repositories;
-using Family_budget.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Family_budget
 {

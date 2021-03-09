@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using Family_budget.BusinessLayer.DTO;
 using Family_budget.BusinessLayer.Interfaces;
-using Family_budget.Models;
 using Family_budget.PresentationLayer.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,12 +44,13 @@ namespace Family_budget.PresentationLayer.Controllers
             return View(expensesView);
         }
 
-        //// GET: UserExpenseController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    var expense = _context.UserExpenses.Include(u => u.User).FirstOrDefault(ex => ex.Id == id);
-        //    return View(expense);
-        //}
+        // GET: UserExpenseController/Details/5
+        public async Task<IActionResult> Details(int id)
+        {
+            var expenseDTO = await _expenseService.GetExpenseByIdAsync(id);
+            var expenseView = _mapper.Map<ExpenseDTO, ExpenseViewModel>(expenseDTO);
+            return View(expenseView);
+        }
 
         // GET: UserExpenseController/Create
         public async Task<ActionResult> Create(int id)
@@ -70,18 +66,16 @@ namespace Family_budget.PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int id, ExpenseViewModel expenseView)
         {
-            //try
+            try
             {
                 if (expenseView != null || expenseView.Value != 0m)
                 {
-                    var memberDTO = await _memberService.GetMemberByIdAsync(id);
-                    var memberView = _mapper.Map<MemberDTO, MemberViewModel>(memberDTO);
 
-                    expenseView.Member = memberView;
+                    expenseView.MemberId = id;
                     expenseView.Id = 0;
                     var expenseDTO = _mapper.Map<ExpenseViewModel, ExpenseDTO>(expenseView);
                     await _expenseService.CreateExpenseAsync(expenseDTO);
-                    return RedirectToAction("GetIndex");
+                    return RedirectToAction("Index", new { id });
 
                     //expenses.User = _context.Users.FirstOrDefault(u => u.Id == id);
                     //expenses.CountDate = DateTime.Now;
@@ -94,58 +88,83 @@ namespace Family_budget.PresentationLayer.Controllers
                 //return View(user);
                 return RedirectToAction("GetIndex");
             }
-            //catch
-            //{
-            //    return NotFound();
-            //}
+            catch
+            {
+                return RedirectToAction("GetIndex");
+            }
         }
 
-        //// GET: UserExpenseController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    var expense = _context.UserExpenses.Include(u => u.User).FirstOrDefault(ex => ex.Id == id);
-        //    return View(expense);
-        //}
+        // GET: UserExpenseController/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            var expenseDTO = await _expenseService.GetExpenseByIdAsync(id);
+            var expenseView = _mapper.Map<ExpenseDTO, ExpenseViewModel>(expenseDTO);
+            return View(expenseView);
+            //var expense = _context.UserExpenses.Include(u => u.User).FirstOrDefault(ex => ex.Id == id);
+            //return View(expense);
+        }
 
-        //// POST: UserExpenseController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(UserExpense expenses)
-        //{
-        //    try
-        //    {
-        //        _context.UserExpenses.Update(expenses);
-        //        await _context.SaveChangesAsync();
-        //        return View("Details", expenses);
-        //    }
-        //    catch
-        //    {
-        //        return NotFound();
-        //    }
-        //}
+        // POST: UserExpenseController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ExpenseViewModel expenseView)
+        {
+            try
+            {
+                var expenseDTO = _mapper.Map<ExpenseViewModel, ExpenseDTO>(expenseView);
+                await _expenseService.UpdateExpenseAsync(expenseDTO);
+                return RedirectToAction("Details", new { expenseView.Id });
+            }
+            catch
+            {
+                return RedirectToAction("GetIndex");
+            }
+        }
 
-        //// GET: UserExpenseController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    var expense = _context.UserExpenses.Include(u => u.User).FirstOrDefault(ex => ex.Id == id);
-        //    return View(expense);
-        //}
+        // GET: UserExpenseController/Delete/5
+        public async Task<IActionResult> CheckDeleteAsync(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+            var expenseDTO = await _expenseService.GetExpenseByIdAsync(id);
+            var expenseView = _mapper.Map<ExpenseDTO, ExpenseViewModel>(expenseDTO);
 
-        //// POST: UserExpenseController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Delete(UserExpense expenses)
-        //{
-        //    try
-        //    {
-        //        _context.UserExpenses.Remove(expenses);
-        //        await _context.SaveChangesAsync();
-        //        return View("Index", _context.UserExpenses.Where(ex => ex.User.Id == expenses.User.Id));
-        //    }
-        //    catch
-        //    {
-        //        return NotFound();
-        //    }
-        //}
+            if (expenseView != null)
+            {
+                return View(expenseView);
+            }
+            else
+            {
+                return RedirectToAction("GetIndex");
+            }
+        }
+
+        // POST: UserExpenseController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    return NotFound();
+                }
+
+                var expenseDTO = await _expenseService.GetExpenseByIdAsync(id);
+                var expenseView = _mapper.Map<ExpenseDTO, ExpenseViewModel>(expenseDTO);
+
+                await _expenseService.DeleteExpenseAsync(id);
+
+                var ID = expenseView.MemberId;
+                return RedirectToAction("Index", new { ID });
+            }
+            catch
+            {
+                return RedirectToAction("GetIndex");
+            }
+        }
     }
 }

@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using Family_budget.BusinessLayer.DTO;
 using Family_budget.BusinessLayer.Interfaces;
-using Family_budget.Models;
 using Family_budget.PresentationLayer.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Family_budget.PresentationLayer.Controllers
@@ -108,7 +103,7 @@ namespace Family_budget.PresentationLayer.Controllers
                 {
                     var memberDTO = _mapper.Map<MemberViewModel, MemberDTO>(memberView);
                     await _memberService.UpdateMemberAsync(memberDTO);
-                    return View("Details", memberView);
+                    return RedirectToAction("Details", new { memberView.Id });
                 }
 
                 return RedirectToAction("Index");

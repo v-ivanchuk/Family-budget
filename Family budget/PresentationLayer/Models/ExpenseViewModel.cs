@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Family_budget.PresentationLayer.Models
 {
@@ -13,6 +10,6 @@ namespace Family_budget.PresentationLayer.Models
         public DateTime DateUpdated { get; set; }
         public string Description { get; set; }
         public DateTime ExpenseDateTime { get; set; }
-        public MemberViewModel Member { get; set; }
+        public int MemberId { get; set; }
     }
 }

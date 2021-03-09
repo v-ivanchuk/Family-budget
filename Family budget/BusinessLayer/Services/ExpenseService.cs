@@ -6,7 +6,6 @@ using Family_budget.DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Family_budget.BusinessLayer.Services
@@ -32,6 +31,7 @@ namespace Family_budget.BusinessLayer.Services
             var expenseEntity = _mapper.Map<Expense>(expenseDTO);
             expenseEntity.DateCreated = DateTime.UtcNow;
             expenseEntity.DateUpdated = DateTime.UtcNow;
+            expenseEntity.Member = await _unitOfWork.GetMemberRepository.FindByIdAsync(expenseEntity.Member.Id);
             await _unitOfWork.GetExpenseRepository.AddAsync(expenseEntity);
             await _unitOfWork.SaveChangesAsync();
             return true;
@@ -64,9 +64,18 @@ namespace Family_budget.BusinessLayer.Services
             return _mapper.Map<ExpenseDTO>(await _unitOfWork.GetExpenseRepository.FindByIdAsync(id));
         }
 
-        public Task<bool> UpdateExpenseAsync(ExpenseDTO expenseDTO)
+        public async Task<bool> UpdateExpenseAsync(ExpenseDTO expenseDTO)
         {
-            throw new NotImplementedException();
+            var checkExpense = _unitOfWork.GetExpenseRepository.FindById(expenseDTO.Id);
+            if (expenseDTO == null || checkExpense == null)
+            {
+                return false;
+            }
+
+            var expenseEntity = _mapper.Map<Expense>(expenseDTO);
+            await _unitOfWork.GetExpenseRepository.UpdateAsync(expenseEntity);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
         }
     }
 }

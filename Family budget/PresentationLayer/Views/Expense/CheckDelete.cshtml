@@ -24,11 +24,11 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="Member.Id" />
+        <input type="hidden" asp-for="MemberId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        @if (Model != null && Model.Member != null)
+        @if (Model != null)
         {
-            <a asp-action="Index" asp-route-id="@Model.Member.Id">Back to List</a>
+            <a asp-action="Index" asp-route-id="@Model.MemberId">Back to List</a>
         }
     </form>
 </div>

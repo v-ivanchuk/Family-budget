@@ -1,8 +1,4 @@
-﻿using Family_budget.DataAccessLayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Family_budget.BusinessLayer.DTO
 {
@@ -14,6 +10,6 @@ namespace Family_budget.BusinessLayer.DTO
         public DateTime DateUpdated { get; set; }
         public string Description { get; set; }
         public DateTime ExpenseDateTime { get; set; }
-        public Member Member { get; set; }
+        public int MemberId { get; set; }
     }
 }
