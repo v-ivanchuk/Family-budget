@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Family_budget.PresentationLayer.Models.ExpenseViewModel>
+
+@{
+    ViewData["Title"] = "Expenses";
+}
+
+<h1>Expenses</h1>
+
+@{
+    var modelId = Model.FirstOrDefault();
+}
+<p>
+    @if (modelId != null)
+    {
+        <a asp-action="Create" asp-route-memberId="@modelId.MemberId">Create New</a>
+    }
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpenseDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="CheckDelete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
