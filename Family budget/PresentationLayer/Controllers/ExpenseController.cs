@@ -23,7 +23,6 @@ namespace Family_budget.PresentationLayer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
         public async Task<IActionResult> GetIndex()
         {
             var membersDTO = await _memberService.GetAllMembersAsync();
@@ -32,19 +31,19 @@ namespace Family_budget.PresentationLayer.Controllers
             return View();
         }
 
-        //[HttpPost]
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int memberId)
         {
-            //var expenses = _context.UserExpenses.Include(u => u.User).Where(user => user.User.Id == id);
-            var expensesDTO = await _expenseService.GetExpenseByMemberIdAsync(id);
+            var expensesDTO = await _expenseService.GetExpenseByMemberIdAsync(memberId);
             var expensesView = _mapper.Map<List<ExpenseDTO>, List<ExpenseViewModel>>(expensesDTO);
 
             if (expensesView.Count() == 0)
-                return RedirectToAction(nameof(Create), new { id });
+            {
+                return RedirectToAction(nameof(Create), new { memberId });
+            }
+
             return View(expensesView);
         }
 
-        // GET: UserExpenseController/Details/5
         public async Task<IActionResult> Details(int id)
         {
             var expenseDTO = await _expenseService.GetExpenseByIdAsync(id);
@@ -52,40 +51,24 @@ namespace Family_budget.PresentationLayer.Controllers
             return View(expenseView);
         }
 
-        // GET: UserExpenseController/Create
-        public async Task<ActionResult> Create(int id)
+        public ActionResult Create(int memberId)
         {
-            //var user = _context.UserExpenses.Include(u => u.User).FirstOrDefault(user => user.User.Id == id);
-            var expensesDTO = await _expenseService.GetExpenseByMemberIdAsync(id);
-            var expensesView = _mapper.Map<List<ExpenseDTO>, List<ExpenseViewModel>>(expensesDTO);
-            return View(expensesView.FirstOrDefault());
+            ViewData["MemberId"] = memberId;
+            return View();
         }
 
-        // POST: UserExpenseController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, ExpenseViewModel expenseView)
+        public async Task<IActionResult> Create(ExpenseViewModel expenseView)
         {
             try
             {
                 if (expenseView != null || expenseView.Value != 0m)
                 {
-
-                    expenseView.MemberId = id;
-                    expenseView.Id = 0;
                     var expenseDTO = _mapper.Map<ExpenseViewModel, ExpenseDTO>(expenseView);
                     await _expenseService.CreateExpenseAsync(expenseDTO);
-                    return RedirectToAction("Index", new { id });
-
-                    //expenses.User = _context.Users.FirstOrDefault(u => u.Id == id);
-                    //expenses.CountDate = DateTime.Now;
-                    //expenses.Id = 0;
-                    //_context.UserExpenses.Add(expenses);
-                    //await _context.SaveChangesAsync();
-                    //return View("Details", expenses);
+                    return RedirectToAction("Index", new { expenseView.MemberId });
                 }
-                //var user = _context.UserExpenses.Include(u => u.User).FirstOrDefault(user => user.User.Id == id);
-                //return View(user);
                 return RedirectToAction("GetIndex");
             }
             catch
@@ -94,17 +77,21 @@ namespace Family_budget.PresentationLayer.Controllers
             }
         }
 
-        // GET: UserExpenseController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var expenseDTO = await _expenseService.GetExpenseByIdAsync(id);
             var expenseView = _mapper.Map<ExpenseDTO, ExpenseViewModel>(expenseDTO);
-            return View(expenseView);
-            //var expense = _context.UserExpenses.Include(u => u.User).FirstOrDefault(ex => ex.Id == id);
-            //return View(expense);
+
+            if(expenseView != null)
+            {
+                return View(expenseView);
+            }
+            else
+            {
+                return RedirectToAction("GetIndex");
+            }
         }
 
-        // POST: UserExpenseController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ExpenseViewModel expenseView)
@@ -121,7 +108,6 @@ namespace Family_budget.PresentationLayer.Controllers
             }
         }
 
-        // GET: UserExpenseController/Delete/5
         public async Task<IActionResult> CheckDeleteAsync(int id)
         {
             if (id <= 0)
@@ -141,7 +127,6 @@ namespace Family_budget.PresentationLayer.Controllers
             }
         }
 
-        // POST: UserExpenseController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -158,8 +143,7 @@ namespace Family_budget.PresentationLayer.Controllers
 
                 await _expenseService.DeleteExpenseAsync(id);
 
-                var ID = expenseView.MemberId;
-                return RedirectToAction("Index", new { ID });
+                return RedirectToAction("Index", new { expenseView.MemberId });
             }
             catch
             {

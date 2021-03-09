@@ -19,7 +19,6 @@ namespace Family_budget.PresentationLayer.Controllers
             _mapper = mapper;
         }
 
-        // GET: User
         public async Task<IActionResult> Index()
         {
             var membersDTO = await _memberService.GetAllMembersAsync();
@@ -27,7 +26,6 @@ namespace Family_budget.PresentationLayer.Controllers
             return View(membersView);
         }
 
-        // GET: User/Details/5
         public async Task<IActionResult> Details(int id)
         {
             if(id <= 0)
@@ -46,13 +44,11 @@ namespace Family_budget.PresentationLayer.Controllers
             return View(memberView);
         }
 
-        // GET: User/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MemberViewModel memberView)
@@ -73,7 +69,6 @@ namespace Family_budget.PresentationLayer.Controllers
             }
         }
 
-        // GET: User/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             if (id <= 0)
@@ -92,7 +87,6 @@ namespace Family_budget.PresentationLayer.Controllers
             return View(memberView);
         }
 
-        // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(MemberViewModel memberView)
@@ -114,7 +108,6 @@ namespace Family_budget.PresentationLayer.Controllers
             }
         }
 
-        // GET: User/Delete/5
         public async Task<IActionResult> CheckDelete(int id)
         {
             if (id <= 0)
@@ -135,7 +128,6 @@ namespace Family_budget.PresentationLayer.Controllers
             }
         }
 
-        // POST: User/Delete/5
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {

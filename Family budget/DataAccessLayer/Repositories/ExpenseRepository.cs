@@ -50,7 +50,7 @@ namespace Family_budget.DataAccessLayer.Repositories
             }
 
             checkExpense.Value = expense.Value;
-            checkExpense.DateUpdated = DateTime.UtcNow;
+            checkExpense.DateUpdated = DateTime.Now;
             checkExpense.Description = expense.Description;
             checkExpense.ExpenseDateTime = expense.ExpenseDateTime;
 

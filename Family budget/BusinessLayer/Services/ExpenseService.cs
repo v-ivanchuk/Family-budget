@@ -29,8 +29,8 @@ namespace Family_budget.BusinessLayer.Services
             }
 
             var expenseEntity = _mapper.Map<Expense>(expenseDTO);
-            expenseEntity.DateCreated = DateTime.UtcNow;
-            expenseEntity.DateUpdated = DateTime.UtcNow;
+            expenseEntity.DateCreated = DateTime.Now;
+            expenseEntity.DateUpdated = DateTime.Now;
             expenseEntity.Member = await _unitOfWork.GetMemberRepository.FindByIdAsync(expenseEntity.Member.Id);
             await _unitOfWork.GetExpenseRepository.AddAsync(expenseEntity);
             await _unitOfWork.SaveChangesAsync();

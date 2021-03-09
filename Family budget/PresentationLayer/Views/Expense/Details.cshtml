@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>UserExpense</h4>
+    <h4>Member Expense</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -47,6 +47,6 @@
     {
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
         <a> | </a>
-        <a asp-action="Index" asp-route-id=@Model.MemberId>Back to List</a>
+        <a asp-action="Index" asp-route-memberId=@Model.MemberId>Back to List</a>
     }
 </div>

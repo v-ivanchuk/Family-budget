@@ -38,8 +38,8 @@ namespace Family_budget.BusinessLayer.Services
             }
 
             var memberEntity = _mapper.Map<Member>(memberDTO);
-            memberEntity.DateCreated = DateTime.UtcNow;
-            memberEntity.DateUpdated = DateTime.UtcNow;
+            memberEntity.DateCreated = DateTime.Now;
+            memberEntity.DateUpdated = DateTime.Now;
             await _unitOfWork.GetMemberRepository.AddAsync(memberEntity);
             await _unitOfWork.SaveChangesAsync();
             return true;

@@ -20,7 +20,7 @@ namespace Family_budget.DataAccessLayer.Repositories
                 return;
             }
 
-            checkMember.DateUpdated = DateTime.UtcNow;
+            checkMember.DateUpdated = DateTime.Now;
             checkMember.Name = member.Name;
 
             await Task.Run(() => context.Members.Update(checkMember));
