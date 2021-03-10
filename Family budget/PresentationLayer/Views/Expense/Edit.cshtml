@@ -1,7 +1,7 @@
 ﻿@model Family_budget.PresentationLayer.Models.ExpenseViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Expense";
 }
 
 <h1>Edit Expense</h1>
@@ -26,7 +26,7 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpenseDateTime" class="control-label"></label>
+                <label asp-for="ExpenseDateTime" class="control-label">Date of expense</label>
                 <input asp-for="ExpenseDateTime" class="form-control" />
                 <span asp-validation-for="ExpenseDateTime" class="text-danger"></span>
             </div>
