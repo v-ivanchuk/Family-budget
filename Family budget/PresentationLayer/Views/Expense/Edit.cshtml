@@ -14,7 +14,7 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="MemberId" />
             <input type="hidden" asp-for="DateCreated" />
-            <input type="hidden" asp-for="DateUpdated" value="@DateTime.Now"/>
+            <input type="hidden" asp-for="DateUpdated" />
             <div class="form-group">
                 <label asp-for="Value" class="control-label"></label>
                 <input asp-for="Value" class="form-control" />
@@ -26,9 +26,9 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpenseDateTime" class="control-label">Date of expense</label>
-                <input asp-for="ExpenseDateTime" class="form-control" />
-                <span asp-validation-for="ExpenseDateTime" class="text-danger"></span>
+                <label asp-for="ExpenseDate" class="control-label">Date of expense</label>
+                <input asp-for="ExpenseDate" class="form-control" />
+                <span asp-validation-for="ExpenseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

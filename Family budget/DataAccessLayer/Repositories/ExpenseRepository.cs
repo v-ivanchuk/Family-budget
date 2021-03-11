@@ -52,7 +52,7 @@ namespace Family_budget.DataAccessLayer.Repositories
             checkExpense.Value = expense.Value;
             checkExpense.DateUpdated = DateTime.Now;
             checkExpense.Description = expense.Description;
-            checkExpense.ExpenseDateTime = expense.ExpenseDateTime;
+            checkExpense.ExpenseDate = expense.ExpenseDate;
 
             await Task.Run(() => context.Expenses.Update(checkExpense));
         }
