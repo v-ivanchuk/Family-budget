@@ -12,9 +12,8 @@
         <form method="post" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="DateCreated" value="@DateTime.Now" />
-            <input type="hidden" asp-for="DateUpdated" value="@DateTime.Now" />
-            <input type="hidden" asp-for="ExpenseDateTime" value="@DateTime.Now" />
+            <input type="hidden" asp-for="DateCreated" />
+            <input type="hidden" asp-for="DateUpdated" />
             <input type="hidden" asp-for="MemberId" value="@ViewData["MemberId"]" />
             <div class="form-group">
                 <label asp-for="Value" class="control-label"></label>
@@ -25,6 +24,11 @@
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpenseDate" class="control-label">Date of expense</label>
+                <input asp-for="ExpenseDate" class="form-control" value="@DateTime.Now"/>
+                <span asp-validation-for="ExpenseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
