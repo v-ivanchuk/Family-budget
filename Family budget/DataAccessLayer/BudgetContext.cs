@@ -8,6 +8,7 @@ namespace Family_budget.DataAccessLayer
         #region Tables
         public DbSet<Member> Members { get; set; }
         public DbSet<Expense> Expenses { get; set; }
+        public DbSet<User> Users { get; set; }
         #endregion
 
         public BudgetContext(DbContextOptions<BudgetContext> options)

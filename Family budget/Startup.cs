@@ -5,6 +5,7 @@ using Family_budget.BusinessLayer.Services;
 using Family_budget.DataAccessLayer;
 using Family_budget.DataAccessLayer.Interfaces;
 using Family_budget.DataAccessLayer.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -33,6 +34,7 @@ namespace Family_budget
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IUserService, UserService>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -42,6 +44,13 @@ namespace Family_budget
             IMapper mapper = mappingConfig.CreateMapper();
             
             services.AddSingleton(mapper);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
 
             services.AddControllersWithViews();
 
@@ -71,6 +80,7 @@ namespace Family_budget
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
