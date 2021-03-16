@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace Family_budget.PresentationLayer.Controllers
 {
     //[Authorize(Policy = "Administrator")]
+    [Authorize]
     public class ExpenseController : Controller
     {
         private readonly IExpenseService _expenseService;

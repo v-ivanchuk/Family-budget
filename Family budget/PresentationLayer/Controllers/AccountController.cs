@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Family_budget.BusinessLayer.DTO;
 using Family_budget.BusinessLayer.Interfaces;
+using Family_budget.DataAccessLayer.Entities;
 using Family_budget.PresentationLayer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -80,6 +81,7 @@ namespace Family_budget.PresentationLayer.Controllers
                 var userDTO = _mapper.Map<UserViewModel, UserDTO>(userView);
 
                 var creationResult = await _userService.CreateUserAsync(userDTO);
+
                 if (creationResult)
                 {
                     return RedirectToAction("Login");
@@ -163,6 +165,144 @@ namespace Family_budget.PresentationLayer.Controllers
             }
 
             return View("Details", usersView);
+        }
+
+        [Authorize(Policy = "Administrator")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
+            var usersDTO = await _userService.GetUserByIdAsync(id);
+            var usersView = _mapper.Map<UserDTO, UserViewModel>(usersDTO);
+
+            if (usersView == null)
+            {
+                return NotFound();
+            }
+
+            return View(usersView);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserViewModel userView)
+        {
+            try
+            {
+                var userDTO = _mapper.Map<UserViewModel, UserDTO>(userView);
+                await _userService.UpdateUserAsync(userDTO);
+                if (User.IsInRole(UserRole.Admin.ToString()))
+                {
+                    return RedirectToAction("Details", new { userView.Id });
+                }
+                else
+                {
+                    return RedirectToAction("MyDetails");
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public async Task<IActionResult> MyEdit()
+        {
+            var usersDTO = await _userService.GetUserByLoginAsync(User.Identity.Name);
+            var usersView = _mapper.Map<UserDTO, UserViewModel>(usersDTO);
+
+            if (usersView == null)
+            {
+                return NotFound();
+            }
+
+            return View("Edit", usersView);
+        }
+
+        [Authorize(Policy = "Administrator")]
+        public async Task<IActionResult> CheckDelete(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
+            var usersDTO = await _userService.GetUserByIdAsync(id);
+            var usersView = _mapper.Map<UserDTO, UserViewModel>(usersDTO);
+
+            if (usersView != null)
+            {
+                return View(usersView);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorize(Policy = "Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    return NotFound();
+                }
+
+                await _userService.DeleteUserAsync(id);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        public async Task<IActionResult> EditLoginData()
+        {
+            var usersDTO = await _userService.GetUserByLoginAsync(User.Identity.Name);
+            var usersView = _mapper.Map<UserDTO, UserViewModel>(usersDTO);
+
+            if (usersView == null)
+            {
+                return NotFound();
+            }
+
+            return View(usersView);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLoginData(UserViewModel userView)
+        {
+            try
+            {
+                if(userView.Password == userView.ConfirmPassword 
+                    && userView.Login != null
+                    && userView.Password != null
+                    && userView?.Login?.Trim()?.Length != 0
+                    && userView?.Password?.Trim()?.Length != 0)
+                {
+                    var userDTO = _mapper.Map<UserViewModel, UserDTO>(userView);
+                    var updateResult = await _userService.UpdateUserLoginDataAsync(userDTO);
+
+                    return View("EditLoginDataResult", updateResult);
+                }
+                else
+                {
+                    return View(userView);
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

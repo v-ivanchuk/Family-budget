@@ -21,6 +21,7 @@ namespace Family_budget.PresentationLayer.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();

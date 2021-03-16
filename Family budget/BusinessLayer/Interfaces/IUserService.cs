@@ -11,5 +11,8 @@ namespace Family_budget.BusinessLayer.Interfaces
         Task<List<UserDTO>> GetAllUsersAsync();
         Task<UserDTO> GetUserByIdAsync(int id);
         Task<UserDTO> GetUserByLoginAsync(string login);
+        Task<bool> UpdateUserAsync(UserDTO userDTO);
+        Task<bool> UpdateUserLoginDataAsync(UserDTO userDTO);
+        Task<bool> DeleteUserAsync(int id);
     }
 }

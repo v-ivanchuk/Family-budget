@@ -30,7 +30,8 @@ namespace Family_budget
                 {
                     Name = "admintest",
                     Login = "admin",
-                    Password = "sa"
+                    Password = "sa",
+                    Role = DataAccessLayer.Entities.UserRole.Admin
                 }
             );
             context.SaveChanges();

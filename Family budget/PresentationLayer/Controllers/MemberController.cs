@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Family_budget.PresentationLayer.Controllers
 {
     //[Authorize(Policy = "HeadOfFamily")]
+    [Authorize]
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;
