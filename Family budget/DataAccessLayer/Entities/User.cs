@@ -1,8 +1,5 @@
 ﻿using Family_budget.DataAccessLayer.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Family_budget.DataAccessLayer
 {
@@ -13,7 +10,6 @@ namespace Family_budget.DataAccessLayer
         public string Login { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public bool IsAdministrator { get; set; }
         public DateTime PasswordDate { get; set; }
         public string PreviousPasswords { get; set; }
         public string PhoneNumber { get; set; }

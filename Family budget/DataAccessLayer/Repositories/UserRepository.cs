@@ -14,7 +14,14 @@ namespace Family_budget.DataAccessLayer.Repositories
         {
         }
 
-        public Task<User> CheckAsync(User user)
+        public async Task<bool> IsLoginAvailableAsync(string userLogin)
+        {
+            var checkUser = await context.Users
+                .FirstOrDefaultAsync(u => u.Login == userLogin);
+            return checkUser == null;
+        }
+
+        public Task<User> CheckLoginPasswordAsync(User user)
         {
             var checkUser = context.Users
                 .FirstOrDefaultAsync(u => u.Login == user.Login && u.Password == user.Password);
