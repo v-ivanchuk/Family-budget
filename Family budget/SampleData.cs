@@ -1,5 +1,6 @@
 ﻿using Family_budget.DataAccessLayer;
 using System.Linq;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Family_budget
 {
@@ -30,7 +31,7 @@ namespace Family_budget
                 {
                     Name = "admintest",
                     Login = "admin",
-                    Password = "sa",
+                    Password = BC.HashPassword("sa"),
                     Role = DataAccessLayer.Entities.UserRole.Admin
                 }
             );

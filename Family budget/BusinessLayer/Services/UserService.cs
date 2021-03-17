@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Family_budget.BusinessLayer.Services
 {
@@ -45,6 +46,7 @@ namespace Family_budget.BusinessLayer.Services
                 userEntity.DateCreated = DateTime.Now;
                 userEntity.DateUpdated = DateTime.Now;
                 userEntity.PasswordDate = DateTime.Now;
+                userEntity.Password = BC.HashPassword(userEntity.Password);
 
                 await _unitOfWork.GetUserRepository.AddAsync(userEntity);
                 await _unitOfWork.SaveChangesAsync();
@@ -123,8 +125,8 @@ namespace Family_budget.BusinessLayer.Services
             }
 
             checkUser.DateUpdated = DateTime.Now;
-            checkUser.PreviousPasswords += "..OlDpAsS:" + checkUser.Password;
-            checkUser.Password = usertempEntity.Password;
+            checkUser.PreviousPasswords += checkUser.Password;
+            checkUser.Password = BC.HashPassword(usertempEntity.Password);
             checkUser.PasswordDate = DateTime.Now;
 
             await _unitOfWork.GetUserRepository.UpdateAsync(checkUser);

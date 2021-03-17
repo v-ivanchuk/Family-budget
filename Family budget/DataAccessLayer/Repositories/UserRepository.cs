@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Family_budget.DataAccessLayer.Repositories
 {
@@ -20,14 +21,17 @@ namespace Family_budget.DataAccessLayer.Repositories
             return checkUser == null;
         }
 
-        public Task<User> CheckLoginDataAsync(User user)
+        public async Task<User> CheckLoginDataAsync(User user)
         {
-            var checkUser = context.Users
-                .FirstOrDefaultAsync(u => u.Login == user.Login && u.Password == user.Password);
+            var checkUser = await context.Users.FirstOrDefaultAsync(u => u.Login == user.Login);
 
             if (checkUser != null)
             {
-                return checkUser;
+                var passwordResult = BC.Verify(user.Password, checkUser.Password);
+                if (passwordResult)
+                {
+                    return checkUser;
+                }
             }
             return null;
         }

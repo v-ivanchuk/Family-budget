@@ -33,6 +33,7 @@ namespace Family_budget.PresentationLayer.Models
 
         public string PreviousPasswords { get; set; }
 
+        [Required]
         [DataType(DataType.PhoneNumber)]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Length should be 10 symbols")]
         [RegularExpression(@"^(\d{10})$", ErrorMessage = "Not a valid phone number. Length must contain 10 symbols")]
