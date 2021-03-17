@@ -13,6 +13,8 @@ namespace Family_budget.BusinessLayer.Mapping
             CreateMap<Expense, ExpenseDTO>().ReverseMap();
             CreateMap<MemberDTO, MemberViewModel>().ReverseMap();
             CreateMap<ExpenseDTO, ExpenseViewModel>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<UserDTO, UserViewModel>().ReverseMap();
         }
     }
 }

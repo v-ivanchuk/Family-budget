@@ -2,6 +2,7 @@
 using Family_budget.BusinessLayer.DTO;
 using Family_budget.BusinessLayer.Interfaces;
 using Family_budget.PresentationLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Family_budget.PresentationLayer.Controllers
 {
+    //[Authorize(Policy = "Administrator")]
+    [Authorize]
     public class ExpenseController : Controller
     {
         private readonly IExpenseService _expenseService;

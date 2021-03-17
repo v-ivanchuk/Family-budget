@@ -48,7 +48,7 @@ namespace Family_budget.BusinessLayer.Services
 
         public async Task<bool> UpdateMemberAsync(MemberDTO memberDTO)
         {
-            var checkMember = _unitOfWork.GetMemberRepository.FindById(memberDTO.Id);
+            var checkMember = await _unitOfWork.GetMemberRepository.FindByIdAsync(memberDTO.Id);
             if(memberDTO == null || checkMember == null)
             {
                 return false;
