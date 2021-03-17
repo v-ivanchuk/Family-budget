@@ -40,6 +40,7 @@ namespace Family_budget.BusinessLayer.Services
             var memberEntity = _mapper.Map<Member>(memberDTO);
             memberEntity.DateCreated = DateTime.Now;
             memberEntity.DateUpdated = DateTime.Now;
+
             await _unitOfWork.GetMemberRepository.AddAsync(memberEntity);
             await _unitOfWork.SaveChangesAsync();
             return true;
@@ -47,13 +48,15 @@ namespace Family_budget.BusinessLayer.Services
 
         public async Task<bool> UpdateMemberAsync(MemberDTO memberDTO)
         {
-            var checkMember = _unitOfWork.GetMemberRepository.FindById(memberDTO.Id);
+            var checkMember = await _unitOfWork.GetMemberRepository.FindByIdAsync(memberDTO.Id);
             if(memberDTO == null || checkMember == null)
             {
                 return false;
             }
 
             var memberEntity = _mapper.Map<Member>(memberDTO);
+            memberEntity.DateUpdated = DateTime.Now;
+
             await _unitOfWork.GetMemberRepository.UpdateAsync(memberEntity);
             await _unitOfWork.SaveChangesAsync();
             return true;

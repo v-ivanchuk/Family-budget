@@ -1,8 +1,6 @@
 ﻿using Family_budget.DataAccessLayer;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Family_budget
 {
@@ -26,6 +24,15 @@ namespace Family_budget
                 new Member
                 {
                     Name = "Joe"
+                }
+            );
+            context.Users.AddRange(
+                new User
+                {
+                    Name = "admintest",
+                    Login = "admin",
+                    Password = BC.HashPassword("sa"),
+                    Role = DataAccessLayer.Entities.UserRole.Admin
                 }
             );
             context.SaveChanges();

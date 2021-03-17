@@ -23,7 +23,7 @@
                 @Html.DisplayNameFor(model => model.Value)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExpenseDateTime)
+                Date of expense
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -39,7 +39,7 @@
                     @Html.DisplayFor(modelItem => item.Value)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ExpenseDateTime)
+                    @Html.DisplayFor(modelItem => item.ExpenseDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
@@ -53,3 +53,5 @@
         }
     </tbody>
 </table>
+
+@await Html.PartialAsync("SumOfExpenses", Model)

@@ -9,6 +9,7 @@ namespace Family_budget.DataAccessLayer.Repositories
         private readonly BudgetContext _budgetContext;
         private IMemberRepository _memberRepository;
         private IExpenseRepository _expenseRepository;
+        private IUserRepository _userRepository;
         private bool _disposed = false;
 
         public UnitOfWork(BudgetContext budgetContext)
@@ -31,6 +32,15 @@ namespace Family_budget.DataAccessLayer.Repositories
             {
                 return _expenseRepository = _expenseRepository
                     ?? new ExpenseRepository(_budgetContext);
+            }
+        }
+
+        public IUserRepository GetUserRepository
+        {
+            get
+            {
+                return _userRepository = _userRepository
+                    ?? new UserRepository(_budgetContext);
             }
         }
 

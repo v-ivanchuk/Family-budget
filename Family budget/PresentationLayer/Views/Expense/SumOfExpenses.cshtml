@@ -1,0 +1,4 @@
+﻿@model IEnumerable<Family_budget.PresentationLayer.Models.ExpenseViewModel>
+
+<h5>Number of expenses - @Model.Count()</h5>
+<h5>The total sum of expenses - @Model.Sum(ex => ex.Value)</h5>

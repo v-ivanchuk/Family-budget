@@ -7,6 +7,7 @@ namespace Family_budget.DataAccessLayer.Interfaces
     {
         public IMemberRepository GetMemberRepository { get; }
         public IExpenseRepository GetExpenseRepository { get; }
+        public IUserRepository GetUserRepository { get; }
         void SaveChanges();
         Task SaveChangesAsync();
     }

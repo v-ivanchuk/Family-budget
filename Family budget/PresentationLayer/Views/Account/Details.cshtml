@@ -1,0 +1,101 @@
+﻿@using Family_budget.DataAccessLayer.Entities
+@model Family_budget.PresentationLayer.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "User profile";
+}
+
+<h1>User profile</h1>
+
+<p>
+    <a asp-action="EditLoginData">Change password or login</a>
+</p>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+
+        @if (User.IsInRole(UserRole.Admin.ToString()))
+        {
+            <dt class="col-sm-2">
+                @Html.LabelFor(model => model.DateCreated, "Date created")
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.LabelFor(model => model.DateUpdated, "Date updated")
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateUpdated)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.LabelFor(model => model.PasswordDate, "Password setup Date ")
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PasswordDate)
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole(UserRole.Admin.ToString()))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a> | </a>
+        <a asp-action="Index">Back to List</a>
+    }
+    else
+    {
+        <a asp-action="MyEdit">Edit</a>
+        <a> | </a>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+</div>

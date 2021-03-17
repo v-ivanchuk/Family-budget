@@ -1,0 +1,22 @@
+﻿@model bool
+
+@{
+    ViewData["Title"] = "Update result";
+}
+
+@if (Model)
+{
+    <h4>Password and login were successfully changed. You need to re-login!</h4>
+    <div>
+        <a asp-controller="Account" asp-action="Logout">To login page</a>
+    </div>
+}
+else
+{
+    <h3>Password and login weren't changed. Please repeat the operation. </h3>
+    <h5>Possible cause: such login could exist in the system </h5>
+    <div>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    </div>
+}
+
